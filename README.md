@@ -1,16 +1,10 @@
 # wip-mt-node-gateway-lib
 
-This app modularizes three gateway functions: communicating with major tom over a WebSocket connection, communicating with major tom over a REST connection, and communicating with Systems over a WebSocket connection.
+This app modularizes three gateway functions: communicating with major tom over a WebSocket connection, communicating with major tom over a REST connection, and communicating with Systems over a WebSocket connection, through an API.
 
-The WebSocket and REST connections to major tom are accessible through `index.js`.
+`example-app.js` is an example implementation of using the library with a bare bones console output.
 
-The WebSocket connection to Systems right now is kind of floating off to the side.
-
-`example-app.js` is an example implementation of using the library with a bare bones node interface.
-
-`example/temp-server.js` allows you to run a localhost server that allows a user to take some rudimentary actions.  It's built on top of `example/example-app.js`, but it probably could just talk to `index.js` directly too.
-
-### To Run This Locally
+### To Run The Example App Locally
 
 ```sh
 $ git clone <this-repo>
