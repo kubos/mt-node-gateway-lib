@@ -39,10 +39,7 @@ function mt_system_channel_ws(connections) {
    * @param {String} resource The string representing the resource that is requesting a connection
    */
   function valid_resource_request(resource) {
-    const [match_key, encoded_sys_name] = resource.split('/')
-      .filter(function(item) {
-        return !!item;
-      });
+    const [match_key, encoded_sys_name] = resource.split('/').filter(item => !!item);
     if (!encoded_sys_name || match_key !== ws_key) {
       return false;
     }
@@ -90,7 +87,7 @@ function mt_system_channel_ws(connections) {
     connection_timers[system_name] = setTimeout(function () {
       connection_bus[system_name].ws_cx.close();
       delete connection_bus[system_name];
-    }, 120 * 60 * 1000); // 120 minutes;
+    }, 120 * ONE_MINUTE); // 120 minutes;
   }
 
   function update_connected(system_name, ws_cx) {
