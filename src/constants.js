@@ -18,7 +18,7 @@ const command_update_fields = [
 ];
 
 module.exports = {
-  ONE_MINTUE,
+  ONE_MINUTE,
   ONE_SECOND,
   command_update_fields,
   mt_outbound_types,
