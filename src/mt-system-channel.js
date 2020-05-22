@@ -180,13 +180,17 @@ function mt_system_channel_ws(connections) {
         const { data, utf8Data } = ws_message;
         const message = data || utf8Data;
 
-        return (
-          // returning a value from an individual system callback or from any_system_callback will
-          // prevent the lib from automatically sending the message to MT.
-          (system_callbacks[system_name] && system_callbacks[system_name](message, system_name)) ||
-          (any_system_callback && any_system_callback(message)) ||
-          post_message(message)
-        );
+        if (system_callbacks[system_name]) {
+          system_callbacks[system_name](message, system_name);
+          return;
+        }
+        
+        if (any_system_callback) {
+          any_system_callback(message);
+          return;
+        }
+        
+        post_message(message);
       });
 
       connection.on('error', function() {
