@@ -1,5 +1,6 @@
-const ONE_MINTUE = 60 * 1000;
 const ONE_SECOND = 1000;
+const ONE_MINUTE = 60 * ONE_SECOND;
+
 
 const mt_outbound_types = {
   command_update: true,
