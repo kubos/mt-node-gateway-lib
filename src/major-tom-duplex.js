@@ -109,9 +109,7 @@ function is_sendable_to_system(message) {
 }
 
 function on_got_internal(callback) {
-  internal_q.on('data', function(data) {
-    callback(data);
-  });
+  internal_q.on('data', callback);
 }
 
 function on_got_outbound(should_send) {
@@ -135,9 +133,7 @@ function on_got_outbound(should_send) {
 }
 
 function on_got_outbound_to_system(callback) {
-  system_q.on('data', function(data) {
-    callback(data);
-  });
+  system_q.on('data', callback);
 }
 
 function on_got_inbound(ready_to_handle) {
