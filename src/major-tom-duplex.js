@@ -174,9 +174,7 @@ function trigger_inbound() {
 function open(any_stream) {}
 
 function pause(any_stream) {
-  if (!any_stream) return;
-
-  if (!any_stream.readableFlowing) return;
+  if (!any_stream || !any_stream.readableFlowing) return;
 
   any_stream.pause();
 }
