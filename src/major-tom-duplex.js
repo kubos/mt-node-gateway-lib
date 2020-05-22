@@ -26,8 +26,7 @@ class Outbound extends Duplex {
 
     if (diff > wait_time) {
       this.last_push = right_now;
-      this.push(this.data[0]);
-      this.data = this.data.slice(1);
+      this.push(this.data.shift());
     } else {
       setTimeout(() => {
         this.last_push = Date.now();
