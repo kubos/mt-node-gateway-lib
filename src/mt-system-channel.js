@@ -43,15 +43,11 @@ function mt_system_channel_ws(connections) {
       .filter(function(item) {
         return !!item;
       });
-    const system_name = encoded_sys_name && decodeURI(encoded_sys_name);
-
-    if (match_key !== ws_key) {
+    if (!encoded_sys_name || match_key !== ws_key) {
       return false;
     }
-
-    if (!system_name) {
-      return false;
-    }
+    
+    const system_name = decodeURI(encoded_sys_name);
 
     if (
       connection_bus[system_name] &&
