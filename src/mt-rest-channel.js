@@ -1,19 +1,16 @@
 const http = require('http');
 const https = require('https');
 const crypto = require('crypto');
-const request = require('request');
 const stream = require('stream');
-const internal_messager = require('./internal-message.js');
+const request = require('request');
 
-function major_tom_files_channel(passed_host, passed_token) {
-  let files_table = {};
+function major_tom_files_channel(passed_host, passed_token, post_message) {
   let host;
   let token;
-  let { internal_message, on_message, set_internal_pace } = internal_messager();
-  let on_download_cb = internal_message;
-  let on_download_failed_cb = internal_message;
-  let on_upload_failed_cb = internal_message;
-  let on_upload_cb = internal_message;
+  let on_download_cb = post_message;
+  let on_download_failed_cb = post_message;
+  let on_upload_failed_cb = post_message;
+  let on_upload_cb = post_message;
 
   function set_files_url(url, opt_token) {
     host = url;
@@ -181,8 +178,10 @@ function major_tom_files_channel(passed_host, passed_token) {
           'Content-Type': 'application/json',
         },
       }, function (error, response, body) {
-        if (error) {
-          on_upload_failed_cb(error);
+        const { statusCode, statusMessage } = response;
+
+        if (error || statusCode >= 400) {
+          on_upload_failed_cb(error || new Error(`Response STATUS ${statusCode} ${statusMessage}`));
           return;
         }
 
@@ -240,12 +239,6 @@ function major_tom_files_channel(passed_host, passed_token) {
       );
     }
 
-    if (success.length !== 2) {
-      throw new Error(
-        'Handler for file download should take two parameters; see docs for details'
-      );
-    }
-
     on_upload_failed_cb = failure || success;
     on_upload_cb = success;
   }
@@ -255,10 +248,8 @@ function major_tom_files_channel(passed_host, passed_token) {
   return {
     download_file_from_mt,
     handle_file_download,
-    on_message,
     set_files_url,
     set_gateway_token,
-    set_internal_pace,
     upload_file_to_mt,
     handle_file_upload,
   };
