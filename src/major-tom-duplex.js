@@ -114,7 +114,7 @@ function on_got_internal(callback) {
 
 function on_got_outbound(should_send) {
   if (!(typeof should_send === 'function' || should_send instanceof Function)) {
-    throw new Error('This method expects a function that returns a send callback when it's OK to send');
+    throw new Error('This method expects a function that returns a send callback when it\'s OK to send');
   }
 
   const [prev_listener] = outbound_q.rawListeners('readable');
